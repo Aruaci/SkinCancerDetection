@@ -5,11 +5,15 @@ import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
 import androidx.camera.core.Preview
 import androidx.camera.core.UseCase
+import androidx.camera.view.PreviewView
+import androidx.camera.view.PreviewView.ScaleType
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
+import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -25,7 +29,9 @@ import java.io.File
 fun CameraCapture(
     modifier: Modifier = Modifier,
     cameraSelector: CameraSelector = CameraSelector.DEFAULT_BACK_CAMERA,
-    onImageFile: (File) -> Unit = { }
+    onImageFile: (File) -> Unit = { },
+    previewScaleType: ScaleType = PreviewView.ScaleType.FIT_CENTER,
+    cameraOverlay: @Composable () -> Unit = { },
 ) {
     Box(modifier = modifier){
         val context = LocalContext.current
@@ -48,8 +54,12 @@ fun CameraCapture(
                 modifier = Modifier.fillMaxSize(),
                 onUseCase = {
                     previewUseCase = it
-                }
+                },
+                scaleType = previewScaleType
             )
+
+            cameraOverlay()
+
             Button(
                 modifier = Modifier
                     .wrapContentSize()
@@ -60,8 +70,10 @@ fun CameraCapture(
                         imageCaptureUseCase.takePicture(context.executor).let { onImageFile(it)}
 
                     }
-                }) {
-                Text(text = "Take Photo!")
+                },
+                shape = RoundedCornerShape(50)
+                ) {
+                Text(text = "take photo".uppercase())
             }
         }
 
