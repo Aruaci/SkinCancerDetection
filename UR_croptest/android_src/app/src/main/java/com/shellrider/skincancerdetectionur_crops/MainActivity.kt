@@ -15,9 +15,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.shellrider.skincancerdetectionur_crops.Screens.FullViewWithCropBorder
-import com.shellrider.skincancerdetectionur_crops.Screens.NavigationTest
-import com.shellrider.skincancerdetectionur_crops.Screens.StartScreen
+import com.shellrider.skincancerdetectionur_crops.Screens.*
 import com.shellrider.skincancerdetectionur_crops.ui.theme.SkinCancerDetectionUR_CropsTheme
 
 class MainActivity : ComponentActivity() {
@@ -48,6 +46,18 @@ fun SkinCancerDetectionApp() {
             }
             composable("full_view_with_crop") {
                 FullViewWithCropBorder()
+            }
+            composable("square_view") {
+                SquareView()
+            }
+            composable("original_view_with_crop") {
+                OriginalViewWithCropBorder()
+            }
+            composable("full_view") {
+                FullView()
+            }
+            composable("original_view") {
+                OriginalView()
             }
         }
 

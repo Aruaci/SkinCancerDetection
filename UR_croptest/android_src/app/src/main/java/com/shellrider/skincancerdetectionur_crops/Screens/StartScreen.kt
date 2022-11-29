@@ -20,5 +20,17 @@ fun StartScreen(navController: NavController) {
         Button(onClick = { navController.navigate("full_view_with_crop") }) {
             Text(text = "FULL VIEW WITH CROP BORDER")
         }
+        Button(onClick = { navController.navigate("full_view") }) {
+            Text(text = "FULL VIEW")
+        }
+        Button(onClick = { navController.navigate("square_view")}) {
+            Text(text = "SQUARE VIEW")
+        }
+        Button(onClick = { navController.navigate("original_view_with_crop") }) {
+            Text(text = "ORIGINAL VIEW WITH CROP BORDER")
+        }
+        Button(onClick = { navController.navigate("original_view") }) {
+            Text(text = "ORIGINAL VIEW")
+        }
     }
 }
