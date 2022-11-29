@@ -1,6 +1,7 @@
 package com.shellrider.skincancerdetectionur_crops.filesystem
 
 import android.content.Context
+import android.graphics.Bitmap
 import android.os.Environment
 import android.util.Log
 import java.io.File
@@ -44,4 +45,15 @@ fun writeImageToStorage(context: Context, file: File){
             Log.e(LOG_TAG, "Error while writing file to external storage.", ex)
         }
     }
+}
+
+fun writeBitMapToStorage(context: Context, bitmap: Bitmap) : File? {
+    var file = File(context.cacheDir, "cachedImage")
+    try {
+        val fileOutputStream = FileOutputStream(file)
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream)
+    } catch (ex: Exception) {
+        Log.e(LOG_TAG, "Error while writing jpg to cache.", ex)
+    }
+    return file
 }
