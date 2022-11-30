@@ -7,15 +7,12 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.shellrider.skincancerdetectionur_crops.Screens.*
+import com.shellrider.skincancerdetectionur_crops.screens.*
 import com.shellrider.skincancerdetectionur_crops.ui.theme.SkinCancerDetectionUR_CropsTheme
 
 class MainActivity : ComponentActivity() {
@@ -45,19 +42,22 @@ fun SkinCancerDetectionApp() {
                 StartScreen(navController = navController)
             }
             composable("full_view_with_crop") {
-                FullViewWithCropBorder()
+                FullViewWithCropBorder(navController = navController)
             }
             composable("square_view") {
-                SquareView()
+                SquareView(navController = navController)
             }
             composable("original_view_with_crop") {
-                OriginalViewWithCropBorder()
+                OriginalViewWithCropBorder(navController = navController)
             }
             composable("full_view") {
-                FullView()
+                FullView(navController = navController)
             }
             composable("original_view") {
-                OriginalView()
+                OriginalView(navController = navController)
+            }
+            composable("image_viewer") {
+                ImageViewer(navController = navController)
             }
         }
 

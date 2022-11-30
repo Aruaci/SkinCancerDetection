@@ -1,6 +1,9 @@
 package com.shellrider.minipainter.camera
 
 import android.util.Log
+import android.util.Rational
+import androidx.camera.core.AspectRatio
+import androidx.camera.core.AspectRatio.RATIO_4_3
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
 import androidx.camera.core.Preview
@@ -21,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.unit.dp
+import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.launch
 import java.io.File
 
@@ -31,8 +35,9 @@ fun CameraCapture(
     cameraSelector: CameraSelector = CameraSelector.DEFAULT_BACK_CAMERA,
     onImageFile: (File) -> Unit = { },
     previewScaleType: ScaleType = PreviewView.ScaleType.FIT_CENTER,
-    cameraOverlay: @Composable () -> Unit = { },
+    cameraOverlay: @Composable () -> Unit = { }
 ) {
+    var buttonClickable by remember { mutableStateOf(true) }
     Box(modifier = modifier){
         val context = LocalContext.current
         val lifecycleOwner = LocalLifecycleOwner.current
@@ -66,10 +71,13 @@ fun CameraCapture(
                     .padding(16.dp)
                     .align(Alignment.BottomCenter),
                 onClick = {
-                    coroutineScope.launch {
-                        imageCaptureUseCase.takePicture(context.executor).let { onImageFile(it)}
-
-                    }
+                        if(buttonClickable) {
+                            coroutineScope.launch {
+                                imageCaptureUseCase.takePicture(context.executor)
+                                    .let { onImageFile(it) }
+                            }
+                            buttonClickable = false
+                        }
                 },
                 shape = RoundedCornerShape(50)
                 ) {

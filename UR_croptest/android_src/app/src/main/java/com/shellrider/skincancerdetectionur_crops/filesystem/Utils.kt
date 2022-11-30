@@ -2,12 +2,19 @@ package com.shellrider.skincancerdetectionur_crops.filesystem
 
 import android.content.Context
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.Matrix
 import android.os.Environment
 import android.util.Log
 import java.io.File
 import java.io.FileOutputStream
 
 const val LOG_TAG = "SCD_FS"
+
+fun Bitmap.rotate(degrees: Float): Bitmap {
+    val matrix = Matrix().apply { postRotate(degrees) }
+    return Bitmap.createBitmap(this, 0, 0, width, height, matrix, true)
+}
 
 /* Checks if external storage is available for read and write */
 fun isExternalStorageWritable(): Boolean {
@@ -32,10 +39,10 @@ fun getAppSpecificAlbumStorageDir(context: Context, albumName: String): File? {
     return file
 }
 
-fun writeImageToStorage(context: Context, file: File){
+fun writeImageToStorage(context: Context, file: File, filename: String){
     if(isExternalStorageWritable()) {
         val dir = getAppSpecificAlbumStorageDir(context, "moles")
-        val writeFile = File(dir, file.name)
+        val writeFile = File(dir, filename)
         try {
             val fileOutputStream = FileOutputStream(writeFile)
             fileOutputStream.write(file.readBytes())
@@ -49,6 +56,7 @@ fun writeImageToStorage(context: Context, file: File){
 
 fun writeBitMapToStorage(context: Context, bitmap: Bitmap) : File? {
     var file = File(context.cacheDir, "cachedImage")
+    var bitmap = bitmap.rotate(90f)
     try {
         val fileOutputStream = FileOutputStream(file)
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream)

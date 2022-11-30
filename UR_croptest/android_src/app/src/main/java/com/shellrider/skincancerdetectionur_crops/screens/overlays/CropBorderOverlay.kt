@@ -1,4 +1,4 @@
-package com.shellrider.skincancerdetectionur_crops.Screens.overlays
+package com.shellrider.skincancerdetectionur_crops.screens.overlays
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.fillMaxSize
