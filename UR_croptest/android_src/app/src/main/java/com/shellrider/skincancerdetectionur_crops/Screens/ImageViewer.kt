@@ -1,4 +1,4 @@
-package com.shellrider.skincancerdetectionur_crops.screens
+package com.shellrider.skincancerdetectionur_crops.Screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
